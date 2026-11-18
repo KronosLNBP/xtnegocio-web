@@ -96,6 +96,49 @@
     });
   }
 
+  // Formulario de empresas (empresas.html): valida y abre WhatsApp
+  var biz = document.getElementById('biz-form');
+  if (biz) {
+    var bizFields = document.getElementById('biz-fields');
+    var bizSuccess = document.getElementById('biz-success');
+    var bizError = document.getElementById('biz-error');
+    var bizRetry = document.getElementById('biz-retry');
+
+    biz.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var nombre = biz.nombre.value.trim();
+      var empresa = biz.empresa.value.trim();
+      var personas = parseInt(biz.personas.value, 10);
+      var okNombre = nombre.length >= 2;
+      var okEmpresa = empresa.length >= 2;
+      var okPersonas = personas >= 1;
+      biz.nombre.setAttribute('aria-invalid', String(!okNombre));
+      biz.empresa.setAttribute('aria-invalid', String(!okEmpresa));
+      biz.personas.setAttribute('aria-invalid', String(!okPersonas));
+      if (!(okNombre && okEmpresa && okPersonas)) {
+        bizError.hidden = false;
+        (!okNombre ? biz.nombre : !okEmpresa ? biz.empresa : biz.personas).focus();
+        return;
+      }
+      bizError.hidden = true;
+
+      var area = biz.area.value;
+      var mensaje = biz.mensaje.value.trim();
+      var text = 'Hola XT Negocio, quiero una propuesta de capacitación y certificación para mi empresa.\n' +
+        'Nombre: ' + nombre + '\n' +
+        'Empresa: ' + empresa + '\n' +
+        'Número de personas: ' + personas +
+        (area ? '\nÁrea de interés: ' + area : '') +
+        (mensaje ? '\nComentarios: ' + mensaje : '');
+      var url = waUrl(text);
+      if (bizRetry) bizRetry.href = url;
+
+      bizFields.hidden = true;
+      bizSuccess.hidden = false;
+      window.open(url, '_blank', 'noopener');
+    });
+  }
+
   var year = document.getElementById('year');
   if (year) year.textContent = new Date().getFullYear();
 })();
