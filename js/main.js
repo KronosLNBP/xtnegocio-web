@@ -243,3 +243,29 @@
     });
   });
 })();
+
+// Si el menú no cabe en una línea, se colapsa en el botón de menú
+(function () {
+  'use strict';
+  var header = document.querySelector('.site-header');
+  var inner = header && header.querySelector('.header-inner');
+  var menu = document.getElementById('menu');
+  var toggle = document.querySelector('.menu-toggle');
+  if (!header || !inner || !menu) return;
+  function fitNav() {
+    header.classList.remove('nav-collapsed');
+    if (getComputedStyle(menu).position === 'absolute') return;
+    var over = inner.scrollWidth > inner.clientWidth + 1 || menu.scrollWidth > menu.clientWidth + 1;
+    if (over) {
+      header.classList.add('nav-collapsed');
+    } else if (menu.classList.contains('is-open')) {
+      menu.classList.remove('is-open');
+      if (toggle) { toggle.setAttribute('aria-expanded', 'false'); toggle.setAttribute('aria-label', 'Abrir menú'); }
+    }
+  }
+  var timer;
+  window.addEventListener('resize', function () { clearTimeout(timer); timer = setTimeout(fitNav, 100); });
+  window.addEventListener('load', fitNav);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitNav);
+  fitNav();
+})();

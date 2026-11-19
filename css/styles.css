@@ -332,3 +332,33 @@ button, input, select, textarea { font: inherit; }
   .lightbox-prev { left: calc(50% - 64px); }
   .lightbox-next { right: calc(50% - 64px); }
 }
+
+/* Página de cursos (cursos.html) */
+.catalog-cta + .catalog-cta { margin-top: 16px; }
+.course-toc-wrap { padding-top: 40px; scroll-margin-top: 90px; }
+.course-toc ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+.course-toc a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; border-radius: 999px; border: 1.5px solid var(--line); background: #fff; color: var(--navy); font-weight: 700; font-size: 15px; text-decoration: none; }
+.course-toc a:hover { border-color: var(--steel); color: var(--steel); }
+.course-group { scroll-margin-top: 80px; }
+.course-group:first-of-type { padding-top: 56px; }
+.course-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 20px; }
+.course { display: flex; flex-direction: column; gap: 14px; padding: 28px; border-radius: 18px; border: 1.5px solid var(--line); background: #fff; scroll-margin-top: 90px; min-width: 0; }
+.course h3 { font-size: 21px; font-weight: 800; line-height: 1.25; color: var(--navy); }
+.course-meta { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.course-meta li { padding: 4px 12px; border-radius: 999px; background: var(--soft-2); color: var(--navy-2); font-size: 13px; font-weight: 700; }
+.course-desc { font-size: 15px; line-height: 1.55; color: #374151; }
+.course-points { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; font-size: 15px; line-height: 1.5; color: var(--muted); flex: 1; }
+.course-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+.course-actions .btn { min-height: 48px; }
+.course-actions .btn small { font-weight: 600; font-size: 12px; opacity: .85; margin-left: 2px; }
+@media (max-width: 640px) { .course { padding: 22px; } .course-actions .btn { width: 100%; justify-content: center; white-space: normal; text-align: center; } }
+
+/* Encabezado: el logo y el botón no se encogen; si el menú no cabe, main.js lo colapsa */
+.header-inner > .brand, .header-actions { flex-shrink: 0; }
+.main-nav { min-width: 0; }
+.main-nav a { white-space: nowrap; }
+@media (min-width: 981px) and (max-width: 1280px) { .main-nav { gap: 20px; font-size: 14px; } }
+.site-header.nav-collapsed .main-nav { position: absolute; top: 72px; left: 0; right: 0; flex-direction: column; gap: 0; background: #fff; border-bottom: 1px solid var(--line); padding: 8px 24px 16px; display: none; }
+.site-header.nav-collapsed .main-nav.is-open { display: flex; }
+.site-header.nav-collapsed .main-nav a { padding: 12px 0; border-bottom: 1px solid var(--line); }
+.site-header.nav-collapsed .menu-toggle { display: inline-flex; }
