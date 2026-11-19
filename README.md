@@ -8,9 +8,10 @@ Sitio estático (HTML, CSS y JavaScript, sin compilación).
 
 ```
 index.html                 Página de inicio (una sola página con secciones)
+empresas.html              Capacitación y certificación para empresas (cotización por WhatsApp)
+inclusion-digital.html     Programa de Inclusión Digital para adultos mayores (informes por WhatsApp)
 aviso-de-privacidad.html   Aviso de privacidad
 404.html                   Página de error
-inclusion-digital.html     Redirige a /#inclusion        (página del sitio anterior)
 mision.html, ventajas.html Redirigen a /#ventajas        (páginas del sitio anterior)
 certificaciones.html       Redirige a /#certificaciones  (reemplaza la página hackeada)
 contacto.html              Redirige a /#contacto         (página del sitio anterior)

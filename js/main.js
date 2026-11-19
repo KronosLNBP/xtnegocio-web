@@ -139,6 +139,63 @@
     });
   }
 
+  // Formulario de inclusión digital (inclusion-digital.html): valida y abre WhatsApp
+  var inc = document.getElementById('inc-form');
+  if (inc) {
+    var incFields = document.getElementById('inc-fields');
+    var incSuccess = document.getElementById('inc-success');
+    var incError = document.getElementById('inc-error');
+    var incRetry = document.getElementById('inc-retry');
+    var famField = document.getElementById('inc-familiar-field');
+    var paraRadios = inc.querySelectorAll('input[name="para"]');
+    var paraValue = function () {
+      var v = 'Para mí';
+      paraRadios.forEach(function (r) { if (r.checked) v = r.value; });
+      return v;
+    };
+    paraRadios.forEach(function (r) {
+      r.addEventListener('change', function () {
+        if (famField) famField.hidden = paraValue() !== 'Para un familiar';
+      });
+    });
+
+    inc.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var nombre = inc.nombre.value.trim();
+      var tel = inc.whatsapp.value.replace(/\D/g, '');
+      var okNombre = nombre.length >= 2;
+      var okTel = tel.length >= 10;
+      inc.nombre.setAttribute('aria-invalid', String(!okNombre));
+      inc.whatsapp.setAttribute('aria-invalid', String(!okTel));
+      if (!(okNombre && okTel)) {
+        incError.hidden = false;
+        (okNombre ? inc.whatsapp : inc.nombre).focus();
+        return;
+      }
+      incError.hidden = true;
+
+      var para = paraValue();
+      var familiar = inc.familiar.value.trim();
+      var temas = [];
+      inc.querySelectorAll('input[name="tema"]:checked').forEach(function (c) { temas.push(c.value); });
+      var mensaje = inc.mensaje.value.trim();
+      var text = (para === 'Para un familiar'
+          ? 'Hola XT Negocio, quiero información del programa de Inclusión Digital para un familiar.'
+          : 'Hola XT Negocio, quiero información del programa de Inclusión Digital.') + '\n' +
+        'Nombre: ' + nombre + '\n' +
+        'WhatsApp: ' + tel +
+        (para === 'Para un familiar' && familiar ? '\nFamiliar: ' + familiar : '') +
+        (temas.length ? '\nTemas de interés: ' + temas.join(', ') : '') +
+        (mensaje ? '\nComentarios: ' + mensaje : '');
+      var url = waUrl(text);
+      if (incRetry) incRetry.href = url;
+
+      incFields.hidden = true;
+      incSuccess.hidden = false;
+      window.open(url, '_blank', 'noopener');
+    });
+  }
+
   var year = document.getElementById('year');
   if (year) year.textContent = new Date().getFullYear();
 })();

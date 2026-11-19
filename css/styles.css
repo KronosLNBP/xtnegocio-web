@@ -270,3 +270,31 @@ button, input, select, textarea { font: inherit; }
   .business-actions { width: 100%; }
   .business-actions .btn { white-space: normal; text-align: center; }
 }
+
+/* Página de inclusión digital (inclusion-digital.html) */
+.inc-topics { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+.inc-family { flex-wrap: wrap; }
+.inc-family .business-copy h2 { color: #fff; }
+.inc-family-checks li { color: var(--on-dark); }
+.inc-family-checks svg { color: var(--steel-light); }
+.inc-fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+.inc-fieldset legend { font-weight: 700; font-size: 14px; padding: 0; margin-bottom: 6px; }
+.inc-options { display: flex; flex-wrap: wrap; gap: 8px; }
+.inc-option { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 8px 14px; border-radius: 10px; border: 1.5px solid var(--field); background: #fff; color: #374151; font-weight: 700; font-size: 14px; cursor: pointer; }
+.inc-option input { width: 20px; height: 20px; margin: 0; accent-color: var(--steel); flex: none; }
+.inc-option:has(input:checked) { background: var(--soft-2); border-color: var(--steel); color: var(--navy); }
+.inc-option:focus-within { box-shadow: 0 0 0 3px rgba(62,92,154,.25); }
+.field[hidden] { display: none; }
+.inc-home-ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+@media (max-width: 640px) { .inc-home-ctas .btn { width: 100%; white-space: normal; text-align: center; } }
+
+/* Bloque "También te puede interesar" (páginas internas) */
+.related { padding-top: 0; }
+.related h2 { margin-bottom: 28px; }
+.related-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+.related-card { height: 100%; display: flex; flex-direction: column; gap: 8px; padding: 26px; border-radius: 18px; border: 1.5px solid var(--line); background: #fff; color: var(--ink); text-decoration: none; transition: border-color .15s ease, transform .15s ease; }
+.related-card:hover, .related-card:focus-visible { border-color: var(--steel); color: var(--ink); transform: translateY(-2px); }
+.related-kicker { font-weight: 800; font-size: 13px; letter-spacing: 1.2px; text-transform: uppercase; color: var(--steel); }
+.related-card strong { font-size: 20px; font-weight: 800; }
+.related-text { color: var(--muted); font-size: 15px; line-height: 1.55; flex: 1; }
+.related-go { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; font-weight: 700; color: var(--steel); }
