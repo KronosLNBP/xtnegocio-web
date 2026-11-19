@@ -199,3 +199,47 @@
   var year = document.getElementById('year');
   if (year) year.textContent = new Date().getFullYear();
 })();
+
+// Testimonios: visor de fotos y un solo video a la vez (testimonios.html)
+(function () {
+  'use strict';
+  var box = document.getElementById('lightbox');
+  var btns = Array.prototype.slice.call(document.querySelectorAll('.gallery-btn'));
+  if (box && btns.length && typeof box.showModal === 'function') {
+    var img = document.getElementById('lightbox-img');
+    var cap = document.getElementById('lightbox-cap');
+    var current = 0;
+    var show = function (i) {
+      current = (i + btns.length) % btns.length;
+      var b = btns[current];
+      var thumb = b.querySelector('img');
+      img.src = b.getAttribute('data-full');
+      img.alt = thumb ? thumb.alt : '';
+      cap.textContent = b.getAttribute('data-caption') + ' (' + (current + 1) + ' de ' + btns.length + ')';
+    };
+    btns.forEach(function (b, i) {
+      b.addEventListener('click', function () { show(i); box.showModal(); });
+    });
+    box.querySelector('.lightbox-close').addEventListener('click', function () { box.close(); });
+    box.querySelector('.lightbox-prev').addEventListener('click', function () { show(current - 1); });
+    box.querySelector('.lightbox-next').addEventListener('click', function () { show(current + 1); });
+    box.addEventListener('click', function (e) { if (e.target === box) box.close(); });
+    box.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowLeft') { e.preventDefault(); show(current - 1); }
+      if (e.key === 'ArrowRight') { e.preventDefault(); show(current + 1); }
+    });
+    box.addEventListener('close', function () { img.removeAttribute('src'); btns[current].focus(); });
+  } else {
+    // Navegadores sin <dialog>: abrir la foto grande en otra pestaña
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () { window.open(b.getAttribute('data-full'), '_blank', 'noopener'); });
+    });
+  }
+
+  var videos = Array.prototype.slice.call(document.querySelectorAll('.video-item video'));
+  videos.forEach(function (v) {
+    v.addEventListener('play', function () {
+      videos.forEach(function (o) { if (o !== v) o.pause(); });
+    });
+  });
+})();

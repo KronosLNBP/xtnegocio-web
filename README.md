@@ -10,6 +10,9 @@ Sitio estático (HTML, CSS y JavaScript, sin compilación).
 index.html                 Página de inicio (una sola página con secciones)
 empresas.html              Capacitación y certificación para empresas (cotización por WhatsApp)
 inclusion-digital.html     Programa de Inclusión Digital para adultos mayores (informes por WhatsApp)
+testimonios.html           Fotos y videos de alumnos en clase y con su constancia (visor de fotos en js/main.js)
+img/testimonios/           Fotos (.webp, versión -sm para miniaturas) y portadas de video
+video/testimonios/         Videos de testimonios (MP4 H.264 480 px, con faststart)
 aviso-de-privacidad.html   Aviso de privacidad
 404.html                   Página de error
 mision.html, ventajas.html Redirigen a /#ventajas        (páginas del sitio anterior)
@@ -35,7 +38,7 @@ El 14 nov 2026 `certificaciones.html` del sitio anterior mostraba spam de apuest
 ## Pendientes
 - Confirmar los dos teléfonos (el sitio anterior mostraba ambos).
 - Catálogo real de certificaciones que ofrece XT Negocio, con duración y precio (hoy se muestran las áreas de Certiprof y se consulta por WhatsApp).
-- Testimonios reales y fotos (equipo, alumnos, programa de inclusión digital).
+- Fotos del equipo. (Las fotos y videos de alumnos ya están en testimonios.html; se publicaron con su autorización.)
 - Correo con dominio propio (por ejemplo contacto@xtnegocio.com.mx).
 
 ## Publicación
