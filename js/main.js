@@ -269,3 +269,83 @@
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitNav);
   fitNav();
 })();
+
+// Formulario de certificaciones (certificaciones.html): valida y abre WhatsApp
+(function () {
+  'use strict';
+  var form = document.getElementById('cert-form');
+  if (!form) return;
+  var cfg = window.XT_CONFIG || {};
+  var number = String(cfg.whatsapp || '').replace(/\D/g, '');
+  var fields = document.getElementById('cert-fields');
+  var success = document.getElementById('cert-success');
+  var error = document.getElementById('cert-error');
+  var retry = document.getElementById('cert-retry');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var nombre = form.nombre.value.trim();
+    var tel = form.whatsapp.value.replace(/\D/g, '');
+    var okNombre = nombre.length >= 2;
+    var okTel = tel.length >= 10;
+    form.nombre.setAttribute('aria-invalid', String(!okNombre));
+    form.whatsapp.setAttribute('aria-invalid', String(!okTel));
+    if (!(okNombre && okTel)) {
+      error.hidden = false;
+      (okNombre ? form.whatsapp : form.nombre).focus();
+      return;
+    }
+    error.hidden = true;
+    var area = form.area.value;
+    var mensaje = form.mensaje.value.trim();
+    var text = 'Hola XT Negocio, quiero información sobre certificaciones Certiprof.\n' +
+      'Nombre: ' + nombre + '\n' +
+      'WhatsApp: ' + tel +
+      (area ? '\nÁrea de interés: ' + area : '') +
+      (mensaje ? '\nCertificación u objetivo: ' + mensaje : '');
+    var url = 'https://wa.me/' + number + '?text=' + encodeURIComponent(text);
+    if (retry) retry.href = url;
+    fields.hidden = true;
+    success.hidden = false;
+    window.open(url, '_blank', 'noopener');
+  });
+})();
+
+// Animaciones de entrada al hacer scroll y botón "Volver arriba"
+(function () {
+  'use strict';
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduce && 'IntersectionObserver' in window) {
+    var targets = document.querySelectorAll('main .section-head, main .area, main .step, main .related-card, main .course, main .cert-includes li, main .why-item, main .path, main .catalog-cta, main .contact-card, main .gallery-item, main .video-item');
+    if (targets.length) {
+      document.documentElement.classList.add('reveal-on');
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting || en.boundingClientRect.top < 0) { en.target.classList.add('is-visible'); io.unobserve(en.target); }
+        });
+      }, { rootMargin: '0px 0px -40px 0px', threshold: 0.05 });
+      targets.forEach(function (el) {
+        var r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight) { el.classList.add('is-visible'); } else { el.classList.add('reveal'); io.observe(el); }
+      });
+      // Respaldo: si algo no se mostró en 4 s tras cargar, se muestra
+      window.addEventListener('load', function () {
+        setTimeout(function () { document.querySelectorAll('.reveal:not(.is-visible)').forEach(function (el) { if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('is-visible'); }); }, 4000);
+      });
+    }
+  }
+
+  if (document.body.scrollHeight < window.innerHeight * 2.5) return;
+  var btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'to-top';
+  btn.setAttribute('aria-label', 'Volver arriba');
+  btn.innerHTML = '<svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><path d="m6 11 6-6 6 6"/></svg>';
+  document.body.appendChild(btn);
+  btn.addEventListener('click', function () {
+    window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    setTimeout(function () { var h = document.querySelector('.brand'); if (h) h.focus({ preventScroll: true }); }, reduce ? 0 : 400);
+  });
+  var onScroll = function () { btn.classList.toggle('is-shown', window.scrollY > window.innerHeight * 1.2); };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
